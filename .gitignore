@@ -1,0 +1,38 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.venv/
+venv/
+.env
+*.env
+
+# Node / Frontend
+node_modules/
+.next/
+dist/
+build/
+
+# Flutter
+.dart_tool/
+.packages
+ios/Pods/
+android/.gradle/
+android/app/build/
+
+# Data y modelos
+data/**
+!data/.gitkeep
+models/**
+!models/.gitkeep
+*.ckpt
+*.pt
+*.pth
+*.h5
+*.onnx
+
+# IDE/OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
