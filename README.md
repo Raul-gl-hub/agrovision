@@ -36,5 +36,10 @@ AgroVision/
 ├─ docker-compose.yml
 └─ .env.example
 
+## 🚀 Roadmap por fases
+- **Fase 1 (MVP):** IoT → ingesta → dashboard → recomendación básica → CV inicial.
+- **Fase 2 (Beta):** IA de plagas, mapas georreferenciados, app móvil, multi-tenant.
+- **Fase 3 (Escala):** predicción rendimiento, integración maquinaria, marketplace.
+
 ## 📜 Licencia
 MIT

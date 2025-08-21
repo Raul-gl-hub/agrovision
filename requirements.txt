@@ -1,0 +1,15 @@
+fastapi
+uvicorn[standard]
+pydantic
+SQLAlchemy
+psycopg2-binary
+paho-mqtt
+python-dotenv
+
+# Fase 1 (CV prototipo)
+opencv-python
+
+# Tests y calidad (los activamos en Fase 1)
+pytest
+flake8
+black
