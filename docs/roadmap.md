@@ -5,8 +5,8 @@
 - [x] Configurar `.gitignore`
 - [x] Escribir README inicial
 - [x] Crear tablero de proyecto en GitHub
-- [ ] Documentar roadmap
-- [ ] Documentar investigación inicial
+- [x] Documentar roadmap
+- [x] Documentar investigación inicial
 
 ## Fase 1 – MVP (3-4 meses)
 - [ ] IoT: simulador de sensores (MQTT) con humedad/temperatura
