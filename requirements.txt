@@ -1,15 +1,25 @@
-fastapi
-uvicorn[standard]
-pydantic
-SQLAlchemy
-psycopg2-binary
-paho-mqtt
-python-dotenv
+# API
+fastapi==0.111.1
+uvicorn[standard]==0.30.1
+pydantic==2.8.2
+numpy>=1.26
 
-# Fase 1 (CV prototipo)
-opencv-python
 
-# Tests y calidad (los activamos en Fase 1)
-pytest
-flake8
-black
+# DB
+SQLAlchemy==2.0.32
+psycopg2-binary==2.9.9
+
+# MQTT
+paho-mqtt==2.1.0
+
+# Utils
+python-dotenv==1.0.1
+
+# CV (para prototipo de colorimetría más adelante)
+opencv-python==4.10.0.84
+
+# Calidad / tests (opcional en contenedor)
+pytest==8.3.2
+flake8==7.1.0
+black==24.8.0
+

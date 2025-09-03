@@ -1,0 +1,13 @@
+# Evita copiar cosas innecesarias a la imagen
+.git
+.vscode
+__pycache__/
+*.py[cod]
+*.log
+.env
+.env.*
+node_modules/
+data/
+models/
+dist/
+build/

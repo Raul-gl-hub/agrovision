@@ -1,0 +1,83 @@
+services:
+  db:
+    image: timescale/timescaledb:2.14.2-pg15
+    container_name: db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - "${DB_PORT:-5432}:5432"
+    volumes:
+      - dbdata:/var/lib/postgresql/data
+      # Si quieres correr tu script de inicialización en el primer arranque,
+      # descomenta la línea de abajo y ajusta la ruta si tu archivo está en scripts/
+      # - ./scripts/init_db.sql:/docker-entrypoint-initdb.d/init_db.sql:ro
+
+  mqtt:
+    image: eclipse-mosquitto:2
+    container_name: mqtt
+    restart: unless-stopped
+    ports:
+      - "${MQTT_BROKER_PORT:-1883}:1883"
+    volumes:
+      - ./iot/mosquitto.conf:/mosquitto/config/mosquitto.conf:ro
+
+  api:
+    build: .
+    container_name: api
+    depends_on:
+      - db
+      - mqtt
+    env_file:
+      - .env
+    ports:
+      - "8000:8000"
+    command: ["uvicorn", "src.api.main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
+
+  worker:
+    build: .
+    container_name: worker
+    depends_on:
+      - db
+      - mqtt
+    env_file:
+      - .env
+    command: ["python", "-m", "src.services.ingestion.mqtt_ingestor"]
+    restart: unless-stopped
+
+  web:
+    build: ./frontend
+    container_name: web
+    env_file:
+      - .env.frontend
+    depends_on:
+      - api
+    ports:
+      - "3000:5173"
+    # 👇 monta tu carpeta local en /app del contenedor
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    # asegúrate que Vite exponga en 0.0.0.0:5173
+    working_dir: /app
+    command: ["npm", "run", "dev", "--", "--host", "0.0.0.0", "--port", "5173"]
+    restart: unless-stopped
+
+  nutr-sim:
+    build: ./scripts/nutr-sim
+    environment:
+      - BROKER_HOST=mqtt
+      - BROKER_PORT=1883
+      - DEVICE_ID=dev1
+      - TOPIC=agrovision/dev/dev1/nutrients
+      - PERIOD_SECS=20
+      # - MQTT_USERNAME=   # (opcional)
+      # - MQTT_PASSWORD=   # (opcional)
+    depends_on:
+      - mqtt
+    restart: unless-stopped
+
+volumes:
+  dbdata:
